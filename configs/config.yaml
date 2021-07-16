@@ -1,11 +1,13 @@
 postgresql:
-  host:
-  port:
-  user:
-  password:
-  dbname:
+  host: 0.0.0.0
+  port: 5432
+  user: postgres
+  password: 1
+  dbname: metricsdb
 
 kafka:
+  bootstrap_servers: ["localhost:9092"]
+  api-version: (0, 10)
 
 application:
   ask_interval: 10
