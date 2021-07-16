@@ -1,0 +1,19 @@
+postgresql:
+  host:
+  port:
+  user:
+  password:
+  dbname:
+
+kafka:
+
+monitoring:
+  ya.ru:
+    "":
+      regexp:
+  exante.eu:
+    ru:
+      regexp:
+  habr.com:
+    "ru/all":
+      regexp:
