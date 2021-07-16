@@ -7,6 +7,10 @@ postgresql:
 
 kafka:
 
+application:
+  ask_interval: 10
+  dump_interval: 20
+
 monitoring:
   ya.ru:
     "":
