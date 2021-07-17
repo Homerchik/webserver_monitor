@@ -1,15 +1,8 @@
-import json
-from typing import Callable, Dict, Any
+from typing import Callable, Dict
 
 from kafka import KafkaProducer
 
-
-def json_to_binary(d: Dict) -> bytes:
-    return bytes(json.dumps(d), encoding='utf8')
-
-
-def to_binary(x: Any) -> bytes:
-    return bytes(x, encoding='utf8')
+from tools.utils import json_to_binary, to_binary
 
 
 class Producer(KafkaProducer):

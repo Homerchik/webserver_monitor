@@ -1,22 +1,27 @@
 import yaml
-from typing import List
 
 import psycopg2
 
 
 class Postgres:
-    def __int__(self):
+    def __init__(self):
         self.connection = None
+        self.cursor = None
+        self.connect()
 
     def connect(self):
-        with open('configs/config.yaml', 'r') as f:
+        with open('../configs/config.yaml', 'r') as f:
             pg_con_params = yaml.safe_load(f)
             assert pg_con_params
-            return psycopg2.connect(**pg_con_params.get('postgres'))
+            self.connection = psycopg2.connect(**pg_con_params.get('postgresql'))
+            self.cursor = self.connection.cursor()
 
-    def execute(self):
-        pass
+    def _execute(self, req: str):
+        self.cursor.execute(req)
+
+    def exec_file(self, filepath: str):
+        with open(filepath, 'r') as f:
+            self.cursor.execute(f.read())
 
 
-def insert_req(table: str, fields: List[str], values: List) -> str:
-    return f"INSERT INTO {table}({fields}) values({values})"
+

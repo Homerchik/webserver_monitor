@@ -2,7 +2,7 @@ from typing import Dict, List, Tuple
 
 import yaml
 
-from checker.job import Publish, Request
+from checker.workers import Publish, Request
 from tools.log import init_logging
 from tools.utils import flatten
 from wrappers.producer import Producer

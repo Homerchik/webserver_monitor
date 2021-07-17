@@ -1,11 +1,8 @@
-import json
-from typing import Callable, Dict
+from typing import Callable
 
 from kafka import KafkaConsumer
 
-
-def binary_json_decode(msg) -> Dict:
-    return json.loads(str(msg, encoding='utf8'))
+from tools.utils import normalize, binary_json_decode
 
 
 class Consumer(KafkaConsumer):
@@ -29,5 +26,5 @@ class Consumer(KafkaConsumer):
             print(str(ex))
 
     def get_messages(self, chunk_size: int = 3):
-        msg = [m.value for m, i in zip(self.consumer, range(chunk_size+1)) if i]
-        return msg
+        msgs = [normalize(m.value) for m, i in zip(self.consumer, range(chunk_size+1)) if i]
+        return msgs

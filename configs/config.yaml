@@ -3,7 +3,7 @@ postgresql:
   port: 5432
   user: postgres
   password: 1
-  dbname: metricsdb
+  dbname: metricdb
 
 kafka:
   bootstrap_servers: ["localhost:9092"]

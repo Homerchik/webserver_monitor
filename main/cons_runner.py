@@ -1,4 +1,4 @@
-from checker.job import Saver, PostgresMetrics
+from checker.workers import Saver, PostgresMetrics
 from wrappers.consumer import Consumer
 
 if __name__ == "__main__":
