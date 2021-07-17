@@ -1,0 +1,22 @@
+version: 1
+formatters:
+  basic:
+    format: '%(asctime)s - %(thread)d - %(module)s - %(levelname)s - %(message)s'
+handlers:
+  console:
+    class: logging.StreamHandler
+    level: INFO
+    formatter: basic
+    stream: ext://sys.stdout
+  rotating:
+    class: logging.handlers.TimedRotatingFileHandler
+    level: INFO
+    filename: "../logs/log.log"
+    when: "midnight"
+    interval: 1
+    backupCount: 10
+    formatter: basic
+root:
+  level: INFO
+  handlers: [console, rotating]
+  propagate: yes
