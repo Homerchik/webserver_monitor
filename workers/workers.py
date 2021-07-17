@@ -2,9 +2,9 @@ import logging
 import time
 from threading import Thread
 
-from checker.request_metrics import RequestMetrics
 from interfaces.storage import Storage
 from tools.utils import necessary_tables
+from workers.request_metrics import RequestMetrics
 from wrappers.consumer import Consumer
 from wrappers.producer import Producer
 
@@ -37,7 +37,7 @@ class Publish(Thread):
     def run(self):
         while True:
             if self.last_req_time + 10 < time.time():
-                logging.debug("Start of service availability check")
+                logging.debug("Start of service availability check cycle")
                 msg = self.req.request()
                 self.last_req_time = time.time()
                 self.producer.publish(topic="metrics", key=self.req.hostname, value=msg)

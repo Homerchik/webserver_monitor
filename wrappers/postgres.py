@@ -1,3 +1,5 @@
+import logging
+
 import yaml
 
 import psycopg2
@@ -14,7 +16,8 @@ class Postgres:
             pg_con_params = yaml.safe_load(f)
             assert pg_con_params
             self.connection = psycopg2.connect(**pg_con_params.get('postgresql'))
-            self.cursor = self.connection.cursor()
+        logging.info("Database connect established")
+        self.cursor = self.connection.cursor()
 
     def _execute(self, req: str):
         self.cursor.execute(req)

@@ -1,3 +1,4 @@
+import logging
 from typing import Callable
 
 from kafka import KafkaConsumer
@@ -21,9 +22,10 @@ class Consumer(KafkaConsumer):
                                           api_version=(0, 10),
                                           value_deserializer=self.deserializer)
             self.connected = True
-        except Exception as ex:
-            print('Exception while connecting Kafka')
-            print(str(ex))
+            logging.info("Connected to Kafka successfully.")
+        except Exception as e:
+            logging.error(f'Exception while connecting Kafka {e}')
+            raise e
 
     def get_messages(self, chunk_size: int = 3):
         msgs = [normalize(m.value) for m, i in zip(self.consumer, range(chunk_size+1)) if i]

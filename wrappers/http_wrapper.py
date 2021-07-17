@@ -1,3 +1,4 @@
+import logging
 import re
 from typing import Tuple, Pattern
 
@@ -9,7 +10,7 @@ def get(session: Session, url: str, regexp: Pattern = None) -> Tuple[int, int, b
         r = session.get(url, timeout=60)
         match = len(re.findall(regexp, r.text)) > 0
     except Exception as e:
-        print(e)
+        logging.error(f"Request failed due to {e}")
         return 0, 60000000, False
 
     return r.status_code, r.elapsed.microseconds, match

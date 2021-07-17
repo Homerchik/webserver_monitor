@@ -1,3 +1,4 @@
+import logging
 from typing import Callable, Dict
 
 from kafka import KafkaProducer
@@ -20,14 +21,14 @@ class Producer(KafkaProducer):
                                            value_serializer=self.value_serializer,
                                            key_serializer=self.key_serializer)
             self.connected = True
-        except Exception as ex:
-            print('Exception while connecting Kafka')
-            print(str(ex))
+            logging.info("Connected to Kafka successfully")
+        except Exception as e:
+            logging.error(f'Exception while connecting Kafka {e}')
 
     def publish(self, topic: str, key: str, value: Dict):
         try:
             self._producer.send(topic, key=key, value=value)
             self._producer.flush()
-        except Exception as ex:
-            print('Exception in publishing message')
-            print(str(ex))
+            logging.debug("Update has been sent")
+        except Exception as e:
+            logging.error(f'Exception in publishing message {e}')
