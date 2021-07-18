@@ -1,9 +1,8 @@
 import logging.config
 
-import yaml
+from tools.utils import read_config
 
 
 def init_logging():
-    with open('../configs/logging.yaml', 'r') as f:
-        config = yaml.safe_load(f)
-        logging.config.dictConfig(config)
+    config = read_config("../configs/logging.yaml")
+    logging.config.dictConfig(config)

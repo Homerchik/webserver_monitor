@@ -1,10 +1,8 @@
 import logging
 from typing import Dict, List, Tuple
 
-import yaml
-
 from tools.log import init_logging
-from tools.utils import flatten
+from tools.utils import flatten, read_config
 from workers.request_metrics import RequestMetrics
 from workers.workers import Publish
 from wrappers.producer import Producer
@@ -19,10 +17,8 @@ def create_job(hostname: str, host_settings: Dict) -> List[Tuple[str, str, str]]
 
 if __name__ == "__main__":
     init_logging()
-
-    with open("../configs/config.yaml", "r") as f:
-        conf = yaml.safe_load(f)
-    sites = conf.get('monitoring').items()
+    config = read_config()
+    sites = config.get('monitoring').items()
 
     payload = flatten([create_job(hostname, settings) for hostname, settings in sites])
     producer = Producer()

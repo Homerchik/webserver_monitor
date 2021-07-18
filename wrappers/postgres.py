@@ -4,6 +4,8 @@ import yaml
 
 import psycopg2
 
+from tools.utils import read_config
+
 
 class Postgres:
     def __init__(self):
@@ -12,10 +14,10 @@ class Postgres:
         self.connect()
 
     def connect(self):
-        with open('../configs/config.yaml', 'r') as f:
-            pg_con_params = yaml.safe_load(f)
-            assert pg_con_params
-            self.connection = psycopg2.connect(**pg_con_params.get('postgresql'))
+        config = read_config()
+        pg_con_params = config.get('postgresql')
+        assert pg_con_params
+        self.connection = psycopg2.connect(**pg_con_params)
         logging.info("Database connect established")
         self.cursor = self.connection.cursor()
 

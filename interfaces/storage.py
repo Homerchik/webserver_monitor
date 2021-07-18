@@ -4,7 +4,7 @@ from typing import Dict, List
 
 class Storage(ABC):
     @abstractmethod
-    def save(self, payload: Dict) -> None:
+    def save(self, payload: List[Dict]) -> None:
         pass
 
     @abstractmethod

@@ -3,7 +3,7 @@ from typing import Callable
 
 from kafka import KafkaConsumer
 
-from tools.utils import normalize, binary_json_decode
+from tools.utils import normalize, binary_json_decode, read_config
 
 
 class Consumer(KafkaConsumer):
@@ -13,20 +13,30 @@ class Consumer(KafkaConsumer):
         self.topic = topic
         self.consumer = None
         self.deserializer = deserializer
+        self.kafka_settings = None
+        self.__settings()
         self.__connect()
+
+    def __settings(self):
+        configs = read_config()
+        self.kafka_settings = configs.get('kafka')
+        if configs.get('kafka_cons'):
+            self.kafka_settings.update(configs.get('kafka_cons'))
+        assert self.kafka_settings
+        self.kafka_settings["value_deserializer"] = self.deserializer
 
     def __connect(self):
         try:
-            self.consumer = KafkaConsumer(self.topic, auto_offset_reset='latest',
-                                          bootstrap_servers=['localhost:9092'],
-                                          api_version=(0, 10),
-                                          value_deserializer=self.deserializer)
+            self.consumer = KafkaConsumer(self.topic, **self.kafka_settings)
             self.connected = True
             logging.info("Connected to Kafka successfully.")
         except Exception as e:
             logging.error(f'Exception while connecting Kafka {e}')
-            raise e
 
-    def get_messages(self, chunk_size: int = 3):
-        msgs = [normalize(m.value) for m, i in zip(self.consumer, range(chunk_size+1)) if i]
-        return msgs
+    def get_messages(self, chunk_size: int = 20):
+        bulk = list()
+        for message in self.consumer:
+            bulk.append(normalize(message.value))
+            if len(bulk) > chunk_size - 1:
+                yield bulk
+                bulk = []

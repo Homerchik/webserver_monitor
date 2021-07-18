@@ -3,7 +3,7 @@ from typing import Callable, Dict
 
 from kafka import KafkaProducer
 
-from tools.utils import json_to_binary, to_binary
+from tools.utils import json_to_binary, to_binary, read_config
 
 
 class Producer(KafkaProducer):
@@ -13,13 +13,21 @@ class Producer(KafkaProducer):
         self.connected = False
         self.value_serializer = value_serializer
         self.key_serializer = key_serializer
+        self.__settings()
         self.__connect()
+
+    def __settings(self):
+        configs = read_config()
+        self.kafka_settings = configs.get('kafka')
+        if configs.get('kafka_prod'):
+            self.kafka_settings.update(configs.get('kafka_prod'))
+        assert self.kafka_settings
+        self.kafka_settings["value_serializer"] = self.value_serializer
+        self.kafka_settings["key_serializer"] = self.key_serializer
 
     def __connect(self):
         try:
-            self._producer = KafkaProducer(bootstrap_servers=['localhost:9092'], api_version=(0, 10),
-                                           value_serializer=self.value_serializer,
-                                           key_serializer=self.key_serializer)
+            self._producer = KafkaProducer(**self.kafka_settings)
             self.connected = True
             logging.info("Connected to Kafka successfully")
         except Exception as e:

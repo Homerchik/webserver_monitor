@@ -5,6 +5,11 @@ import yaml
 from inflection import parameterize
 
 
+def read_config(path: str = "../configs/config.yaml") -> Dict:
+    with open(path, "r") as f:
+        return yaml.safe_load(f.read())
+
+
 def normalize(s: Any) -> Any:
     if type(s) == str:
         return parameterize(s, separator="_")
@@ -23,10 +28,9 @@ def binary_json_decode(msg) -> Dict:
     return json.loads(str(msg, encoding='utf8'))
 
 
-def necessary_tables() -> List[str]:
-    with open('../configs/config.yaml') as f:
-        c = yaml.safe_load(f)
-        monitoring_settings = c.get('monitoring')
+def necessary_tables(fpath: str = "../configs/config.yaml") -> List[str]:
+    config = read_config(fpath)
+    monitoring_settings = config.get('monitoring')
     return [normalize(host) for host in monitoring_settings.keys()]
 
 
