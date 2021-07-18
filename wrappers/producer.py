@@ -7,18 +7,19 @@ from tools.utils import json_to_binary, to_binary, read_config
 
 
 class Producer(KafkaProducer):
-    def __init__(self, value_serializer: Callable = json_to_binary, key_serializer: Callable = to_binary):
+    def __init__(self, value_serializer: Callable = json_to_binary, key_serializer: Callable = to_binary,
+                 configs: Dict = None):
         super().__init__()
         self._producer = None
         self.connected = False
         self.value_serializer = value_serializer
         self.key_serializer = key_serializer
-        self.__settings()
+        self.__settings(configs)
         self.__connect()
 
-    def __settings(self):
-        configs = read_config()
-        self.kafka_settings = configs.get('kafka')
+    def __settings(self, configs):
+        configs = configs or read_config()
+        self.kafka_settings = configs.get('kafka').copy()
         if configs.get('kafka_prod'):
             self.kafka_settings.update(configs.get('kafka_prod'))
         assert self.kafka_settings

@@ -1,6 +1,7 @@
 import logging
 import time
 from threading import Thread
+from typing import List, Dict
 
 from interfaces.storage import Storage
 from tools.utils import necessary_tables, read_config
@@ -10,13 +11,15 @@ from wrappers.producer import Producer
 
 
 class Saver(Thread):
-    def __init__(self, cons: Consumer, storage: Storage):
-        super().__init__()
+    def __init__(self, cons: Consumer, storage: Storage, tables: List[str] = None, is_daemon: bool = False,
+                 config: Dict = None):
+        super().__init__(daemon=is_daemon)
         self.storage = storage
         self.cons = cons
-        self.configs = read_config()
+        self.configs = config or read_config()
         self.chunk_size = self.configs.get('application').get('chunk_size') or 10
-        self.storage.prepare(necessary_tables())
+        tables = tables or necessary_tables()
+        self.storage.prepare(tables)
 
     def run(self):
         while True:
@@ -27,11 +30,11 @@ class Saver(Thread):
 
 
 class Publish(Thread):
-    def __init__(self, req: RequestMetrics, producer: Producer, is_daemon: bool = False):
+    def __init__(self, req: RequestMetrics, producer: Producer, is_daemon: bool = False, config: Dict = None):
         super().__init__(daemon=is_daemon)
         self.req = req
         self.producer = producer
-        self.configs = read_config()
+        self.configs = config or read_config()
         self.update_interval = self.configs.get('application').get('update_interval') or 10
         self.last_req_time = 0
 

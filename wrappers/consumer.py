@@ -1,5 +1,5 @@
 import logging
-from typing import Callable
+from typing import Callable, Dict
 
 from kafka import KafkaConsumer
 
@@ -7,18 +7,18 @@ from tools.utils import binary_json_decode, read_config
 
 
 class Consumer(KafkaConsumer):
-    def __init__(self, topic: str, deserializer: Callable = binary_json_decode):
+    def __init__(self, topic: str, deserializer: Callable = binary_json_decode, config: Dict = None):
         super().__init__()
         self.connected = False
         self.topic = topic
         self.consumer = None
         self.deserializer = deserializer
         self.kafka_settings = None
-        self.__settings()
+        self.__settings(config)
         self.__connect()
 
-    def __settings(self):
-        configs = read_config()
+    def __settings(self, config: Dict = None):
+        configs = config or read_config()
         self.kafka_settings = configs.get('kafka')
         if configs.get('kafka_cons'):
             self.kafka_settings.update(configs.get('kafka_cons'))

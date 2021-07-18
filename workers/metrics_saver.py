@@ -6,6 +6,9 @@ from wrappers.postgres import Postgres
 
 
 class PostgresMetrics(Postgres, Storage):
+    def __init__(self, config):
+        super().__init__(config=config)
+
     mappings = {"ts": int, "page": str, "status": int, "latency": int, "regex_valid": bool}
 
     @staticmethod
@@ -19,8 +22,8 @@ class PostgresMetrics(Postgres, Storage):
               f"page VARCHAR(255), status INTEGER NOT NULL, latency BIGINT NOT NULL, " \
               f"regex_valid BOOLEAN NOT NULL);"
         try:
-            self._execute(req)
-            self.connection.commit()
+            self.execute(req)
+            self.commit()
             logging.info(f"Table {table} created successfully")
         except Exception as e:
             logging.error(f"Table {table} creation failed due to {e}")
@@ -29,7 +32,7 @@ class PostgresMetrics(Postgres, Storage):
     def tables_list_in_db(self):
         req = "SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'"
         try:
-            self._execute(req)
+            self.execute(req)
             tables = [table for table, *_ in self.cursor.fetchall()]
             return tables
         except Exception as e:
@@ -42,7 +45,7 @@ class PostgresMetrics(Postgres, Storage):
                 hostname = item.pop("hostname")
                 kv = [(k, v) for k, v in item.items()]
                 line = self.insert_line(hostname, [k for k, _ in kv], [v for _, v in kv])
-                self._execute(line)
+                self.execute(line)
             self.connection.commit()
             logging.debug(f"Insert of {len(payload)} records was successful")
         except Exception as e:
@@ -56,5 +59,5 @@ class PostgresMetrics(Postgres, Storage):
 
     def drop_table(self, table: str):
         req = f"DROP TABLE {table};"
-        self._execute(req)
-        self.connection.commit()
+        self.execute(req)
+        self.commit()
