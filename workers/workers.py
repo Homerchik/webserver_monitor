@@ -27,8 +27,8 @@ class Saver(Thread):
 
 
 class Publish(Thread):
-    def __init__(self, req: RequestMetrics, producer: Producer):
-        super().__init__()
+    def __init__(self, req: RequestMetrics, producer: Producer, is_daemon: bool = False):
+        super().__init__(daemon=is_daemon)
         self.req = req
         self.producer = producer
         self.configs = read_config()

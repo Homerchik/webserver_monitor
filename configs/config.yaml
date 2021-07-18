@@ -28,6 +28,17 @@ monitoring:
   exante.eu:
     ru:
       regexp:
+    en:
+      regexp:
   habr.com:
     "ru/all":
       regexp:
+
+test:
+  monitoring:
+    "localhost:18803":
+      start:
+        regexp: "start"
+      end:
+        regexp: "word"
+  expected:

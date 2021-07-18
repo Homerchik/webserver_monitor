@@ -1,5 +1,5 @@
 import json
-from typing import Any, List, Dict
+from typing import Any, List, Dict, Tuple
 
 import yaml
 from inflection import parameterize
@@ -37,3 +37,9 @@ def necessary_tables(fpath: str = "../configs/config.yaml") -> List[str]:
 def flatten(t):
     return [item for sublist in t for item in sublist]
 
+
+def create_job(hostname: str, host_settings: Dict) -> List[Tuple[str, str, str]]:
+    jobs = []
+    for page in host_settings.keys():
+        jobs.append((hostname, page, host_settings.get(page).get("regexp") or ""))
+    return jobs

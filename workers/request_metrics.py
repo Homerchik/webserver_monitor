@@ -22,5 +22,5 @@ class RequestMetrics:
         status, latency, regex = get(self.session, self.url, self.regexp)
         msg = {k: v for k, v in zip(self.keys,
                                     [int(time()), normalize(self.hostname), normalize(self.page) or None,
-                                     status, int(latency / 1000), normalize(regex) or None])}
+                                     status, int(latency / 1000), regex])}
         return msg
