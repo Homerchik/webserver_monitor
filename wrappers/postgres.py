@@ -1,7 +1,5 @@
 import logging
 
-import yaml
-
 import psycopg2
 
 from tools.utils import read_config

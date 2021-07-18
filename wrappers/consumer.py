@@ -3,7 +3,7 @@ from typing import Callable
 
 from kafka import KafkaConsumer
 
-from tools.utils import normalize, binary_json_decode, read_config
+from tools.utils import binary_json_decode, read_config
 
 
 class Consumer(KafkaConsumer):
@@ -36,7 +36,7 @@ class Consumer(KafkaConsumer):
     def get_messages(self, chunk_size: int = 20):
         bulk = list()
         for message in self.consumer:
-            bulk.append(normalize(message.value))
+            bulk.append(message.value)
             if len(bulk) > chunk_size - 1:
                 yield bulk
                 bulk = []
