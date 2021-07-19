@@ -36,8 +36,8 @@ def binary_json_decode(msg) -> Dict:
     return json.loads(str(msg, encoding='utf8'))
 
 
-def necessary_tables(fpath: str = "../configs/config.yaml") -> List[str]:
-    config = read_config(fpath)
+def necessary_tables(config: Dict = None) -> List[str]:
+    config = config or read_config()
     monitoring_settings = config.get('monitoring')
     return [normalize(host) for host in monitoring_settings.keys()]
 

@@ -18,7 +18,7 @@ class Saver(Thread):
         self.cons = cons
         self.configs = config or read_config()
         self.chunk_size = self.configs.get('application').get('chunk_size') or 10
-        tables = tables or necessary_tables()
+        tables = tables or necessary_tables(config)
         self.storage.prepare(tables)
 
     def run(self):
