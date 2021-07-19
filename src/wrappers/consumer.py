@@ -3,7 +3,7 @@ from typing import Callable, Dict
 
 from kafka import KafkaConsumer
 
-from tools.utils import binary_json_decode, read_config
+from src.tools.utils import binary_json_decode, read_config
 
 
 class Consumer(KafkaConsumer):

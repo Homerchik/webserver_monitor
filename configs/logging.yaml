@@ -11,7 +11,7 @@ handlers:
   rotating:
     class: logging.handlers.TimedRotatingFileHandler
     level: INFO
-    filename: "../logs/log.log"
+    filename: "logs/log.log"
     when: "midnight"
     interval: 1
     backupCount: 10

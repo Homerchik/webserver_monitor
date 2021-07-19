@@ -1,7 +1,5 @@
 from flask import Flask
 
-from tools.utils import read_config
-
 app = Flask(__name__)
 
 

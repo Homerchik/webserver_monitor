@@ -4,8 +4,8 @@ from unittest.mock import Mock
 
 import pytest
 
-from tools.utils import normalize
-from workers.request_metrics import RequestMetrics
+from src.tools.utils import normalize
+from src.workers.request_metrics import RequestMetrics
 
 
 @pytest.mark.parametrize("hostname, page", [("re.ex.ex", "ru/en/ru/es"),

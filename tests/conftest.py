@@ -4,14 +4,14 @@ from typing import Dict
 import pytest
 from kafka import KafkaConsumer
 
+from src.workers.metrics_saver import PostgresMetrics
+from src.workers.request_metrics import RequestMetrics
+from src.workers.workers import Publish, Saver
+from src.wrappers.postgres import Postgres
 from tests import flask_server
-from tools.utils import read_config, create_job, flatten, normalize
-from workers.metrics_saver import PostgresMetrics
-from workers.request_metrics import RequestMetrics
-from workers.workers import Publish, Saver
-from wrappers.consumer import Consumer
-from wrappers.postgres import Postgres
-from wrappers.producer import Producer
+from src.tools.utils import read_config, create_job, flatten, normalize
+from src.wrappers.consumer import Consumer
+from src.wrappers.producer import Producer
 
 configs_rel_path = "configs/config.yaml"
 

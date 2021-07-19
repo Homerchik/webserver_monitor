@@ -4,7 +4,7 @@ import re
 from datetime import timedelta
 from unittest.mock import Mock
 
-from wrappers.http_wrapper import get
+from src.wrappers.http_wrapper import get
 
 
 class TestHttpWrapper:

@@ -3,7 +3,7 @@ from typing import List, Tuple, Dict
 
 import psycopg2
 
-from tools.utils import read_config
+from src.tools.utils import read_config
 
 
 class Postgres:

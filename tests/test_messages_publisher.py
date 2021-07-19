@@ -1,6 +1,6 @@
 import pytest
 
-from tools.utils import binary_json_decode, normalize, flatten
+from src.tools.utils import flatten
 
 
 @pytest.mark.parametrize('max_msg_count', [10])

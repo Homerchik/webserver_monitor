@@ -2,8 +2,8 @@ import time
 
 import pytest
 
-from tools.utils import flatten
-from wrappers.consumer import Consumer
+from src.tools.utils import flatten
+from src.wrappers.consumer import Consumer
 
 
 @pytest.mark.parametrize('run_cycles', [2])

@@ -3,7 +3,7 @@ from typing import Callable, Dict
 
 from kafka import KafkaProducer
 
-from tools.utils import json_to_binary, to_binary, read_config
+from src.tools.utils import json_to_binary, to_binary, read_config
 
 
 class Producer(KafkaProducer):

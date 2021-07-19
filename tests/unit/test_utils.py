@@ -1,6 +1,6 @@
 import pytest
 
-from tools.utils import normalize
+from src.tools.utils import normalize
 
 
 @pytest.mark.parametrize("str, exp", [("some-host.ru", "some-host_ru"),

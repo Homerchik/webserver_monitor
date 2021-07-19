@@ -3,11 +3,11 @@ import time
 from threading import Thread
 from typing import List, Dict
 
-from interfaces.storage import Storage
-from tools.utils import necessary_tables, read_config
-from workers.request_metrics import RequestMetrics
-from wrappers.consumer import Consumer
-from wrappers.producer import Producer
+from src.interfaces.storage import Storage
+from src.tools.utils import necessary_tables, read_config
+from src.workers.request_metrics import RequestMetrics
+from src.wrappers.consumer import Consumer
+from src.wrappers.producer import Producer
 
 
 class Saver(Thread):

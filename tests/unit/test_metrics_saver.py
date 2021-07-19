@@ -1,6 +1,6 @@
 import pytest
 
-from workers.metrics_saver import PostgresMetrics
+from src.workers.metrics_saver import PostgresMetrics
 
 
 @pytest.mark.parametrize("table, fields, values, exp",

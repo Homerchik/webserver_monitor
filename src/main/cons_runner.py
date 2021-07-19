@@ -2,11 +2,11 @@ import logging
 
 import click
 
-from tools.log import init_logging
-from tools.utils import build_conf_logging_path, build_conf_app_path, read_config
-from workers.metrics_saver import PostgresMetrics
-from workers.workers import Saver
-from wrappers.consumer import Consumer
+from src.tools.log import init_logging
+from src.tools.utils import build_conf_logging_path, build_conf_app_path, read_config
+from src.workers.metrics_saver import PostgresMetrics
+from src.workers.workers import Saver
+from src.wrappers.consumer import Consumer
 
 
 @click.command()

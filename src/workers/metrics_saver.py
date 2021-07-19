@@ -1,8 +1,8 @@
 import logging
 from typing import List, Dict
 
-from interfaces.storage import Storage
-from wrappers.postgres import Postgres
+from src.interfaces.storage import Storage
+from src.wrappers.postgres import Postgres
 
 
 class PostgresMetrics(Postgres, Storage):

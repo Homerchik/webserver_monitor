@@ -2,11 +2,11 @@ import logging
 
 import click
 
-from tools.log import init_logging
-from tools.utils import flatten, read_config, create_job, build_conf_logging_path, build_conf_app_path
-from workers.request_metrics import RequestMetrics
-from workers.workers import Publish
-from wrappers.producer import Producer
+from src.tools.log import init_logging
+from src.tools.utils import flatten, read_config, create_job, build_conf_logging_path, build_conf_app_path
+from src.workers import RequestMetrics
+from src.workers import Publish
+from src.wrappers.producer import Producer
 
 
 @click.command()

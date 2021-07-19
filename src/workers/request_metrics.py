@@ -4,8 +4,8 @@ from typing import Dict
 
 from requests import Session
 
-from tools.utils import normalize
-from wrappers.http_wrapper import get
+from src.tools.utils import normalize
+from src.wrappers.http_wrapper import get
 
 
 class RequestMetrics:

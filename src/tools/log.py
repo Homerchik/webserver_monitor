@@ -1,6 +1,6 @@
 import logging.config
 
-from tools.utils import read_config
+from src.tools.utils import read_config
 
 
 def init_logging(config_path: str = "../configs/logging.yaml"):

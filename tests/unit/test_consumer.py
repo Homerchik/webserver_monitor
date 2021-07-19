@@ -4,7 +4,7 @@ from typing import Generator
 
 import pytest
 
-from wrappers.consumer import Consumer
+from src.wrappers.consumer import Consumer
 
 Message = namedtuple("Message", ["value"])
 
