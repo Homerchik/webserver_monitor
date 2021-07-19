@@ -10,7 +10,7 @@ handlers:
     stream: ext://sys.stdout
   rotating:
     class: logging.handlers.TimedRotatingFileHandler
-    level: INFO
+    level: DEBUG
     filename: "logs/log.log"
     when: "midnight"
     interval: 1

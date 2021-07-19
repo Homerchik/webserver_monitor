@@ -4,16 +4,24 @@ from typing import Dict
 import pytest
 from kafka import KafkaConsumer
 
+from src.tools.log import init_logging
 from src.workers.metrics_saver import PostgresMetrics
 from src.workers.request_metrics import RequestMetrics
 from src.workers.workers import Publish, Saver
 from src.wrappers.postgres import Postgres
 from tests import flask_server
-from src.tools.utils import read_config, create_job, flatten, normalize
+from src.tools.utils import read_config, create_job, flatten, normalize, build_conf_app_path, build_conf_logging_path
 from src.wrappers.consumer import Consumer
 from src.wrappers.producer import Producer
 
-configs_rel_path = "configs/config.yaml"
+configs_dir = "configs"
+configs_rel_path = build_conf_app_path(configs_dir)
+logging_rel_path = build_conf_logging_path(configs_dir)
+
+
+@pytest.fixture(scope='session')
+def logging():
+    init_logging(logging_rel_path)
 
 
 @pytest.fixture(scope='module')
@@ -29,7 +37,7 @@ def kafka_consumer(config):
 
 
 @pytest.fixture(scope='session')
-def run_publisher(config, flask_service):
+def run_publisher(config, flask_service, logging):
     configs = config.get('test').get('monitoring')
     j = flatten([create_job(hostname, settings) for hostname, settings in configs.items()])
     producer = Producer(configs=config)

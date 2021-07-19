@@ -27,12 +27,9 @@ class Producer(KafkaProducer):
         self.kafka_settings["key_serializer"] = self.key_serializer
 
     def __connect(self):
-        try:
-            self._producer = KafkaProducer(**self.kafka_settings)
-            self.connected = True
-            logging.info("Connected to Kafka successfully")
-        except Exception as e:
-            logging.error(f'Exception while connecting Kafka {e}')
+        self._producer = KafkaProducer(**self.kafka_settings)
+        self.connected = True
+        logging.info("Connected to Kafka successfully")
 
     def publish(self, topic: str, key: str, value: Dict):
         try:

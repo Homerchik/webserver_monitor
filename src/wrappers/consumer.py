@@ -26,12 +26,9 @@ class Consumer(KafkaConsumer):
         self.kafka_settings["value_deserializer"] = self.deserializer
 
     def __connect(self):
-        try:
-            self.consumer = KafkaConsumer(self.topic, **self.kafka_settings)
-            self.connected = True
-            logging.info("Connected to Kafka successfully.")
-        except Exception as e:
-            logging.error(f'Exception while connecting Kafka {e}')
+        self.consumer = KafkaConsumer(self.topic, **self.kafka_settings)
+        self.connected = True
+        logging.info("Connected to Kafka successfully.")
 
     def get_messages(self, chunk_size: int = 20):
         bulk = list()
