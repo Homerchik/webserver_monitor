@@ -6,10 +6,24 @@ config and pushes messages with information about their availability
 - metrics consumer - subscribes to theme `metrics` in Kafka and periodically
 writes metrics, recieved from Kafka, to PostgreSQL;
 
-#Cloning, Testing and Running 
+#Testing and Running 
+To run tests, you need to start swarm
 ```
-Blah blah blah
+docker-compose up
 ```
+
+To run metrics publisher you need to run 
+```
+python3 -m src.main.prod_runner --config-dir configs
+```
+where configs is directory with config-files for publisher
+
+To run metrics consumer you need to run
+```
+python3 -m src.main.cons_runner --config-dir configs
+```
+where configs is directory with config-files for publisher
+
 
 #Configuring
 ##Metrics publisher
