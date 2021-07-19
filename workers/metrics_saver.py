@@ -6,7 +6,7 @@ from wrappers.postgres import Postgres
 
 
 class PostgresMetrics(Postgres, Storage):
-    def __init__(self, config):
+    def __init__(self, config: Dict = None):
         super().__init__(config=config)
 
     mappings = {"ts": int, "page": str, "status": int, "latency": int, "regex_valid": bool}

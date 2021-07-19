@@ -10,6 +10,14 @@ def read_config(path: str = "../configs/config.yaml") -> Dict:
         return yaml.safe_load(f.read())
 
 
+def build_conf_logging_path(dir_1: str) -> str:
+    return f"{dir_1}/logging.yaml"
+
+
+def build_conf_app_path(dir_1: str) -> str:
+    return f"{dir_1}/config.yaml"
+
+
 def normalize(s: Any) -> Any:
     if type(s) == str:
         return parameterize(s, separator="_")
