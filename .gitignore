@@ -1,0 +1,10 @@
+.idea/
+.env/
+.cache/
+.pytest_cache/
+.trash/
+.venv/
+.mypy*
+logs/*
+__pycache__
+*.pyc
