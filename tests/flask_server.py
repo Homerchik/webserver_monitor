@@ -18,7 +18,3 @@ def run_server(config):
     (hostname, _), *_ = config.get('test').get('monitoring').items()
     host, port = hostname.split(":")
     app.run(host=host, port=port)
-
-
-if __name__ == "__main__":
-    run_server()
