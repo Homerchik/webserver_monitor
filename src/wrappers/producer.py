@@ -1,5 +1,6 @@
 import logging
 from typing import Callable, Dict
+import signal
 
 from kafka import KafkaProducer
 
@@ -11,7 +12,6 @@ class Producer(KafkaProducer):
                  configs: Dict = None):
         super().__init__()
         self._producer = None
-        self.connected = False
         self.value_serializer = value_serializer
         self.key_serializer = key_serializer
         self.__settings(configs)
@@ -28,7 +28,6 @@ class Producer(KafkaProducer):
 
     def __connect(self):
         self._producer = KafkaProducer(**self.kafka_settings)
-        self.connected = True
         logging.info("Connected to Kafka successfully")
 
     def publish(self, topic: str, key: str, value: Dict):

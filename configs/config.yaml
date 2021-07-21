@@ -1,13 +1,13 @@
 postgresql:
   host: 0.0.0.0
-  port: 5432
+#  port: 5432
   user: postgres
   password: 1
   dbname: metricdb
 
 #non node specialization specific settings
 kafka:
-  bootstrap_servers: ["localhost:9092"]
+  bootstrap_servers: ["127.0.0.1:9092"]
 
 #specific settings for producers
 kafka_prod:

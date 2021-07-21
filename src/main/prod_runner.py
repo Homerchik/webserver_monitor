@@ -2,8 +2,10 @@ import logging
 
 import click
 
+from src.tools.config_schema import schema
 from src.tools.log import init_logging
-from src.tools.utils import flatten, read_config, create_job, build_conf_logging_path, build_conf_app_path
+from src.tools.utils import flatten, read_config, create_job, build_conf_logging_path, build_conf_app_path, \
+    validate_config
 from src.workers.request_metrics import RequestMetrics
 from src.workers.workers import Publish
 from src.wrappers.producer import Producer
@@ -16,6 +18,7 @@ def run(config_dir):
        about services state to Kafka"""
     init_logging(build_conf_logging_path(config_dir))
     config = read_config(build_conf_app_path(config_dir))
+    assert validate_config(schema("producer"), config)
     sites = config.get('monitoring').items()
 
     payload = flatten([create_job(hostname, settings) for hostname, settings in sites])

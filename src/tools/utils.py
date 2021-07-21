@@ -1,4 +1,6 @@
 import json
+import logging
+from itertools import chain
 from typing import Any, List, Dict, Tuple
 
 import yaml
@@ -43,7 +45,7 @@ def necessary_tables(config: Dict = None) -> List[str]:
 
 
 def flatten(t):
-    return [item for sublist in t for item in sublist]
+    return list(chain.from_iterable(t))
 
 
 def create_job(hostname: str, host_settings: Dict) -> List[Tuple[str, str, str]]:
@@ -51,3 +53,17 @@ def create_job(hostname: str, host_settings: Dict) -> List[Tuple[str, str, str]]
     for page in host_settings.keys():
         jobs.append((hostname, page, host_settings.get(page).get("regexp") or ""))
     return jobs
+
+
+def validate_config(structure: Dict, config: Dict) -> bool:
+    is_valid = True
+    for key, value in structure.items():
+        deep_config = config.get(key, None)
+        if not deep_config:
+            logging.error(f"No item for key {key} found!")
+            is_valid = False
+            break
+        if type(value) == dict:
+            if not validate_config(value, deep_config):
+                return False
+    return is_valid

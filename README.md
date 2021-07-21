@@ -7,22 +7,22 @@ config and pushes messages with information about their availability
 writes metrics, recieved from Kafka, to PostgreSQL;
 
 #Testing and Running 
-To run tests, you need to start swarm
+To run tests, you need just to run pytest, after fetching all python dependencies
 ```
-docker-compose up
+pytest
 ```
 
-To run metrics publisher you need to run 
+To run metrics publisher you need
 ```
 python3 -m src.main.prod_runner --config-dir configs
 ```
 where configs is directory with config-files for publisher
 
-To run metrics consumer you need to run
+To run metrics consumer you need
 ```
 python3 -m src.main.cons_runner --config-dir configs
 ```
-where configs is directory with config-files for publisher
+where configs is directory with config-files for consumer
 
 
 #Configuring
@@ -57,6 +57,11 @@ kafka:
 kafka_cons:
   auto_offset_reset: latest
 ```
+
+##Logging
+To configure logging just put logging.yaml file near the config.yaml and pass 
+their destination during service run. Any logging options supported by
+standard python logging lib is available.
 
 ##Services list
 Below are settings for monitoring two services 

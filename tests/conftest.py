@@ -1,4 +1,5 @@
 from multiprocessing.context import Process
+from time import sleep
 from typing import Dict
 
 import pytest
@@ -19,6 +20,12 @@ configs_rel_path = build_conf_app_path(configs_dir)
 logging_rel_path = build_conf_logging_path(configs_dir)
 
 
+@pytest.fixture(scope="session")
+def wait_for_kafka(session_scoped_container_getter):
+    """Wait for the api from my_api_service to become responsive"""
+    sleep(60)
+
+
 @pytest.fixture(scope='session')
 def logging():
     init_logging(logging_rel_path)
@@ -37,7 +44,7 @@ def kafka_consumer(config):
 
 
 @pytest.fixture(scope='session')
-def run_publisher(config, flask_service, logging):
+def run_publisher(config, flask_service, logging, wait_for_kafka):
     configs = config.get('test').get('monitoring')
     j = flatten([create_job(hostname, settings) for hostname, settings in configs.items()])
     producer = Producer(configs=config)

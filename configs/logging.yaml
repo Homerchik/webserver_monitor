@@ -5,18 +5,18 @@ formatters:
 handlers:
   console:
     class: logging.StreamHandler
-    level: DEBUG
+    level: INFO
     formatter: basic
     stream: ext://sys.stdout
   rotating:
     class: logging.handlers.TimedRotatingFileHandler
-    level: DEBUG
+    level: INFO
     filename: "logs/log.log"
     when: "midnight"
     interval: 1
     backupCount: 10
     formatter: basic
 root:
-  level: DEBUG
+  level: INFO
   handlers: [console, rotating]
   propagate: yes
