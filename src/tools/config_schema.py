@@ -10,6 +10,5 @@ def schema(service_type: str) -> Dict:
                 "monitoring": ""}
     elif service_type == "producer":
         return {"kafka": {"bootstrap_servers": ""},
-                "kafka_prod": "",
                 "application": {"update_interval": ""},
                 "monitoring": ""}
