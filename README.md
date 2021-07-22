@@ -1,4 +1,4 @@
-#Overview
+# Overview
 This project provides two services:
 - metrics publisher - periodically checks webservices described in 
 config and pushes messages with information about their availability
@@ -6,7 +6,7 @@ config and pushes messages with information about their availability
 - metrics consumer - subscribes to theme `metrics` in Kafka and periodically
 writes metrics, recieved from Kafka, to PostgreSQL;
 
-#Testing and Running 
+# Testing and Running 
 To run tests, you need just to run pytest, after fetching all python dependencies
 ```
 pytest
@@ -25,8 +25,8 @@ python3 -m src.main.cons_runner --config-dir configs
 where configs is directory with config-files for consumer
 
 
-#Configuring
-##Metrics publisher
+# Configuring
+## Metrics publisher
 ```
 #minimal set of kafka settings
 # any other settings supported by kafka.python can be set here
@@ -37,7 +37,7 @@ kafka:
 kafka_prod:
 ```
 
-##Metrics consumer
+## Metrics consumer
 ```
 # minimal set of settings for PG
 # any other settings supported by psycopg.connect can be set here
@@ -58,12 +58,12 @@ kafka_cons:
   auto_offset_reset: latest
 ```
 
-##Logging
+## Logging
 To configure logging just put logging.yaml file near the config.yaml and pass 
 their destination during service run. Any logging options supported by
 standard python logging lib is available.
 
-##Services list
+## Services list
 Below are settings for monitoring two services 
 - localhost and page my_fancy_page on it, with regexp validation on page content
 - my.webservice.com with two web-resources get_book and get_stone API w/o 
@@ -80,7 +80,7 @@ monitoring:
       regexp  
 ```
 
-#Message format
+# Message format
 To kafka publisher messages pushed as
 - key - hostname, with all `.` replaced with `_`
 - value - dict with keys `ts`, `hostname`, `page`, `status`, `latency`, `regex_valid`
