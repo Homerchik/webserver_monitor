@@ -40,8 +40,8 @@ class Publish(Thread):
 
     def run(self):
         while True:
-            if self.last_req_time + self.update_interval < time.time():
-                logging.debug("Start of service availability check cycle")
-                msg = self.req.request()
-                self.last_req_time = time.time()
-                self.producer.publish(topic="metrics", key=self.req.hostname, value=msg)
+            logging.debug("Start of service availability check cycle")
+            msg = self.req.request()
+            self.last_req_time = time.time()
+            self.producer.publish(topic="metrics", key=self.req.hostname, value=msg)
+            time.sleep(self.update_interval)
