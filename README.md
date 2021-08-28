@@ -1,3 +1,5 @@
+[![build status](https://github.com/Homerchik/webserver_monitor/actions/workflows/tests.yml/badge.svg)](https://github.com/Homerchik/webserver_monitor/actions/workflows/tests.yml)
+
 # Overview
 This project provides two services:
 - metrics publisher - periodically checks webservices described in 
